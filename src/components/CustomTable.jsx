@@ -93,11 +93,11 @@ function CustomTable({ tableData, onSelectRows, selectedRows, onDelete }) {
                             }}
                         />
                     </TableColumn>
-                    <TableColumn>Id</TableColumn>
+                    <TableColumn>ID</TableColumn>
                     <TableColumn>NAME</TableColumn>
-                    <TableColumn>Email</TableColumn>
-                    <TableColumn>Role</TableColumn>
-                    <TableColumn>Actions</TableColumn>
+                    <TableColumn>EMAIL</TableColumn>
+                    <TableColumn>ROLE</TableColumn>
+                    <TableColumn>ACTIONS</TableColumn>
                 </TableHeader>
                 {visibleData.length === 0 ? (
                     <TableBody emptyContent="No data to display." />

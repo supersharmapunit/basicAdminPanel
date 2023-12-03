@@ -1,4 +1,4 @@
-import { Input, Button, Checkbox, Select, SelectItem } from "@nextui-org/react";
+import { Input, Button, Select, SelectItem } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import CustomTable from './components/CustomTable';
 
