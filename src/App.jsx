@@ -1,4 +1,4 @@
-import { Input, Button, Checkbox } from "@nextui-org/react";
+import { Input, Button, Checkbox, Select, SelectItem } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import CustomTable from './components/CustomTable';
 
@@ -7,6 +7,7 @@ function App() {
   const [data, setData] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
 
+  const filters = ["id", "name", "email", "role"];
   const fetchData = async () => {
     try {
       const response = await fetch(
@@ -53,6 +54,21 @@ function App() {
           value={searchText}
           onKeyDown={handleKeyDown}
         />
+        <div className="filter-container flex-1">
+          <Select
+            label="Filter constraint"
+            placeholder="Select a filter"
+            className=""
+            isRequired={true}
+            defaultSelectedKeys={["id"]}
+          >
+            {filters.map((filter) => (
+              <SelectItem key={filter} value={filter}>
+                {filter}
+              </SelectItem>
+            ))}
+          </Select>
+        </div>
         <Button
           className="flex-none mx-1"
           onClick={handleSearch}
