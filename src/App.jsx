@@ -3,17 +3,22 @@ import { useState, useEffect } from "react";
 import CustomTable from './components/CustomTable';
 
 function App() {
+
+  const filters = ["id", "name", "email", "role"];
   const [searchText, setSearchText] = useState('');
   const [data, setData] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState(filters[0]);
+  const [originalData, setOriginalData] = useState([]);
 
-  const filters = ["id", "name", "email", "role"];
+
   const fetchData = async () => {
     try {
       const response = await fetch(
         'https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json'
       );
       const result = await response.json();
+      setOriginalData(result);
       setData(result);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -31,7 +36,32 @@ function App() {
   };
 
   const handleSearch = () => {
-    console.log('handle search for', searchText);
+    if (searchText === null || searchText === '' || searchText.length === 0) {
+      setData(originalData);
+
+    } else {
+      console.log('handle search for', searchText, 'on filter', selectedFilter);
+      let filteredArr;
+      if (selectedFilter === 'id') {
+        filteredArr = originalData.filter((ele) => {
+          return ele.id === searchText
+        });
+      } else if (selectedFilter === 'name') {
+        filteredArr = originalData.filter((ele) => {
+          return ele.name.toLowerCase().includes(searchText);
+        });
+      } else if (selectedFilter === 'email') {
+        filteredArr = originalData.filter((ele) => {
+          return ele.email === searchText
+        });
+      } else {
+        filteredArr = originalData.filter((ele) => {
+          return ele.role === searchText
+        });
+      }
+      setData(filteredArr);
+      setSearchText('');
+    }
   };
 
   const handleMultipleDelete = () => {
@@ -61,6 +91,7 @@ function App() {
             className=""
             isRequired={true}
             defaultSelectedKeys={["id"]}
+            onChange={(e) => setSelectedFilter(e.target.value)}
           >
             {filters.map((filter) => (
               <SelectItem key={filter} value={filter}>
